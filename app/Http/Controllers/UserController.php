@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
-use Illuminate\Database\Eloquent\Collection;
+use App\User;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Post[]|Collection
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return Post::paginate();
+        //
     }
 
     /**
@@ -32,10 +31,10 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
         //
     }
@@ -44,10 +43,10 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -55,11 +54,15 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
         //
+    }
+
+    public function posts(User $user) {
+        return $user->posts()->paginate();
     }
 }
