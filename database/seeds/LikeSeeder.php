@@ -11,6 +11,14 @@ class LikeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        \App\Post::all()->each(function ($post){
+            $count = rand(0, 10);
+            \App\User::inRandomOrder()->take($count)->get()->each(function ($user) use ($post){
+                $like = new \App\Like();
+                $like->user_id = $user->id;
+                $like->post_id = $post->id;
+                $like->save();
+            });
+        });
     }
 }

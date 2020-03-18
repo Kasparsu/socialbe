@@ -11,6 +11,8 @@ class CommentSeeder extends Seeder
      */
     public function run()
     {
-        //
+        \App\Post::all()->each(function ($post){
+            factory(\App\Comment::class, 10)->create(['post_id'=> $post->id]);
+        });
     }
 }
