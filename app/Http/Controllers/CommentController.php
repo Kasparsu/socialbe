@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -10,11 +11,12 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Post $post
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Post $post)
     {
-        //
+        return $post->comments()->paginate();
     }
 
     /**
