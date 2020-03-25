@@ -46,6 +46,19 @@ class Post extends Model
     }
 
     public function getLikerNamesAttribute(){
-        return $this->likers()->get();
+        return $this->likers()->select('name')->get()->pluck('name');
+    }
+
+    public function like() {
+        $like = Like::where('user_id', 1)->where('post_id', $this->id)->first();
+        if(!$like){
+            $like = new Like();
+            $like->user_id = 1;
+            $like->post_id = $this->id;
+            $like->save();
+        } else {
+            $like->delete();
+        }
+        $this->refresh();
     }
 }

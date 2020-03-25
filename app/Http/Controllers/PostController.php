@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::paginate();
+        return Post::latest()->paginate();
     }
 
     /**
@@ -26,7 +26,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post();
+        $post->content = $request->input('body');
+        $post->title = $request->input('title');
+        $post->user_id = 1;
+        $post->save();
+        return $post;
     }
 
     /**
@@ -37,7 +42,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return $post;
     }
 
     /**
@@ -49,17 +54,26 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        if($request->has('body')) {
+            $post->content = $request->input('body');
+        }
+        if($request->has('title')) {
+            $post->title = $request->input('title');
+        }
+        $post->save();
+        return $post;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Post  $post
+     * @param \App\Post $post
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response('', 200);
     }
 }
